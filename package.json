@@ -1,0 +1,13 @@
+{
+  "name": "ts-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "build:w": "tsc -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
