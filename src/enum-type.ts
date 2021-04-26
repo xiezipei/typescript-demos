@@ -79,8 +79,24 @@
 
 
 // ========= 指定枚举成员值 - 3 - 计算枚举成员
-enum NoYesSum {
-    No = 123,
-    Yes = Math.random(),
+// enum NoYesSum {
+//     No = 123,
+//     Yes = Math.random(),
+// }
+// console.log(NoYesSum.Yes);  // OK
+
+
+// ========= 运行时枚举 - 数字枚举
+// enum NoYes {
+//     Yes,
+//     No,
+// }
+// console.log(NoYes)
+
+
+// ========= 运行时枚举 - 字符串枚举
+enum NoYes {
+    Yes = 'YES',
+    No = 'NO',
 }
-console.log(NoYesSum.Yes);  // OK
+console.log(NoYes)
