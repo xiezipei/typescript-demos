@@ -119,15 +119,15 @@
 
 
 // ========= 接口：继承接口
-interface User {    // 定义user接口类型
-    name: string,
-    age: number,
-}
+// interface User {    // 定义user接口类型
+//     name: string,
+//     age: number,
+// }
 
-interface VipUser extends User {    // 继承单个接口
-    color: number
-}
+// interface VipUser extends User {    // 继承单个接口
+//     color: number
+// }
 
-interface SuperVipUser extends User, VipUser {  // 继承多个接口
-    assistant: string
-}
+// interface SuperVipUser extends User, VipUser {  // 继承多个接口
+//     assistant: string
+// }

@@ -74,22 +74,22 @@ person.age = 18;    // OK
 
 
 // ====== 类型守卫 - 字面量类型守卫
-type Cat = {
-    name: 'cici';
-    age: number;
-}
+// type Cat = {
+//     name: 'cici';
+//     age: number;
+// }
 
-type Dog = {
-    name: 'bubu';
-    weight: number;
-}
+// type Dog = {
+//     name: 'bubu';
+//     weight: number;
+// }
 
-function doSomething(arg: Cat | Dog) {
-    if (arg.name === 'cici') {
-        console.log(arg.age);   // OK
-        // console.log(arg.weight);    // Error: 类型“Cat”上不存在属性“weight”。
-    } else {
-        // console.log(arg.age);   // Error: 类型“Dog”上不存在属性“age”。
-        console.log(arg.weight);    // OK
-    }
-}
+// function doSomething(arg: Cat | Dog) {
+//     if (arg.name === 'cici') {
+//         console.log(arg.age);   // OK
+//         // console.log(arg.weight);    // Error: 类型“Cat”上不存在属性“weight”。
+//     } else {
+//         // console.log(arg.age);   // Error: 类型“Dog”上不存在属性“age”。
+//         console.log(arg.weight);    // OK
+//     }
+// }
