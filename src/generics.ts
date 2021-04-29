@@ -147,4 +147,92 @@
 // }
 
 
-// ========== 泛型 - 泛型约束 - keyof 使用
+// ========== 泛型 - 泛型约束 - keyof 使用示例
+// enum Difficulty {
+//     Easy,
+//     Intermediate,
+//     Hard
+// }
+
+// function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
+//     return obj[key];
+// }
+
+// let tsInfo = {
+//     name: 'TS',
+//     superSetOf: 'JS',
+//     difficulty: Difficulty.Intermediate
+// }
+
+// // 获取 `tsInof` 的 `difficulty` 属性值
+// let difficulty: Difficulty = getProperty(tsInfo, 'difficulty'); // OK
+
+// // 获取 `tsInof` 的 `superSetOf` 属性值
+// // let superSetOf: string = getProperty(tsInfo, '_superSetOf');    // Error
+
+
+// ========== 泛型 - 参数默认类型
+// interface A<T = string> { name: T } // 泛型接口A默认为 `string` 类型
+
+// const strA: A = { name: 'Tony' }    // OK
+
+// const numB: A<number> = { name: 1000 }  // OK
+
+
+// ========== 泛型 - 泛型条件类型
+// // 定义一个泛型接口Dictionary；T默认为类型为any；键为string，值为T
+// interface Dictionary<T = any> {
+//     [key: string]: T
+// }
+
+// // 用类型别名 `type` 并基于 `Dictionary` 弄了一个新类型，名为 `StrDict`
+// type StrDict = Dictionary<string>;
+
+// // ???
+// type DictMember<T> = T extends Dictionary<infer V> ? V : never;
+// // ???
+// type StrDictMember = DictMember<StrDict>;
+
+
+// ========== 泛型 - 泛型条件类型 - 示例：获取 Promise 对象的返回值类型
+// interface Person {
+//     name: string,
+//     age: number
+// }
+
+// async function stringPromise() {
+//     return 'Hello, Tony';
+// }
+
+// async function personPromise() {
+//     return { name: 'Tony', age: 30 } as Person;
+// }
+
+// type PromiseType<T> = (args: any[]) => Promise<T>;
+// type UnPromiseify<T> = T extends PromiseType<infer U> ? U : never;  // `infer` ???
+
+// type extractStringPromise = UnPromiseify<typeof stringPromise>;
+// type extractPersonPromise = UnPromiseify<typeof personPromise>;
+
+
+// ========== 泛型 - 泛型工具类型 - Partial 示例
+interface Todo {
+    title: string,
+    description: string
+}
+
+function updateTodo(todo: Todo, fieldsToUpdate: Partial<Todo>) {
+    return { ...todo, ...fieldsToUpdate };   // ???
+}
+
+const todo1 = {
+    title: 'organize desk',
+    description: 'clear clutter'
+}
+
+const todo2 = updateTodo(todo1, {
+    description: 'throw out trash'
+})
+
+console.log(todo1); // => {title: "organize desk", description: "clear clutter"}
+console.log(todo2); // => {title: "organize desk", description: "throw out trash"}
