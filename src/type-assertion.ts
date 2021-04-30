@@ -1,10 +1,10 @@
 // ====== 类型断言 - 语法
-let someValue: any = "this is a string";
+// let someValue: any = "this is a string";
 
-let strLength: number = (<string>someValue).length; // 尖括号语法
-// let strLength: number = (someValue as string).length;   // as语法
+// let strLength: number = (<string>someValue).length; // 尖括号语法
+// // let strLength: number = (someValue as string).length;   // as语法
 
-console.log(strLength);
+// console.log(strLength);
 
 
 // ====== 类型断言 - 一个使用场景
@@ -14,13 +14,13 @@ console.log(strLength);
 // person.age = 20;    // Error: 属性不存在
 
 // 情况2
-interface Person {
-    name: string,
-    age: number
-}
-const person = {} as Person;
-person.name = 'tommy';  // OK
-person.age = 18;    // OK
+// interface Person {
+//     name: string,
+//     age: number
+// }
+// const person = {} as Person;
+// person.name = 'tommy';  // OK
+// person.age = 18;    // OK
 
 
 // ====== 类型守卫 - `instanceof`

@@ -382,8 +382,94 @@
 
 
 // // ========== 泛型 - 泛型是什么 - 示例 3
-function swap<T, U>(tuple: [T, U]): [U, T] {
-    return [tuple[1], tuple[0]];
-}
+// function swap<T, U>(tuple: [T, U]): [U, T] {
+//     return [tuple[1], tuple[0]];
+// }
 
-swap([7, 'seven']); // => ['seven', 7]
+// swap([7, 'seven']); // => ['seven', 7]
+
+
+// // ========== 泛型 - 泛型索引 - 错误示例
+// function getValue(obj: object, key: string) {
+//     return obj[key];    // Error, 类型为 "string" 的表达式不能用于索引类型 "{}"
+// }
+
+// function getValue<T extends object>(obj: T, key: string) {
+//     return obj[key];    // Error, same tips
+// }
+
+
+// // ========== 泛型 - 泛型索引 - 正确示例
+// function getValue<T extends object, U extends keyof T>(obj: T, key: U) {
+//     return obj[key];    // OK
+// }
+
+// const person = { name: 'Tony', age: 18 };
+// getValue(person, 'age');    // OK
+
+
+// // ========== 泛型 - 泛型索引 - 多重类型的泛型约束 - 没有同时约束示例
+// interface FirstInterface {
+//     dosomething(): number
+// }
+
+// interface SecondInterface {
+//     dosomethingElse(): string
+// }
+
+// class Demo<T extends FirstInterface, SecondInterface> {
+//     private genericProperty!: T;
+
+//     useT() {
+//         this.genericProperty.dosomething();  // OK
+//         // this.genericProperty.dosomethingElse(); // Error, 类型“T”上不存在属性“dosomethingElse”
+//     }
+// }
+
+
+// ========== 泛型 - 泛型索引 - 多重类型的泛型约束 - 同时约束错误示例
+// interface FirstInterface {
+//     dosomething(): number
+// }
+
+// interface SecondInterface {
+//     dosomethingElse(): string
+// }
+
+// class Demo<T extends FirstInterface, T extends SecondInterface> {   // Error, 标识符“T”重复。
+//     private genericProperty!: T;
+
+//     useT() {
+//         this.genericProperty.dosomething();  // OK
+//         // this.genericProperty.dosomethingElse(); // Error, 类型“T”上不存在属性“dosomethingElse”
+//     }
+// }
+
+
+// ========== 泛型 - 泛型索引 - 多重类型的泛型约束 - 同时约束示例 1：使用子接口
+// interface FirstInterface { dosomething(): number };
+// interface SecondInterface { dosomethingElse(): string };
+// interface childInterface extends FirstInterface, SecondInterface {};    // here
+
+// class Demo<T extends childInterface> {
+//     private genericProperty!: T;
+
+//     useT() {
+//         this.genericProperty.dosomething(); // OK
+//         this.genericProperty.dosomethingElse(); // OK
+//     }
+// }
+
+
+// ========== 泛型 - 泛型索引 - 多重类型的泛型约束 - 同时约束示例 2：使用交叉类型
+interface FirstInterface { dosomething(): number };
+interface SecondInterface { dosomethingElse(): string };
+
+class Demo<T extends FirstInterface & SecondInterface> {
+    private genericProperty!: T;
+
+    useT() {
+        this.genericProperty.dosomething(); // OK
+        this.genericProperty.dosomethingElse(); // OK
+    }
+}
