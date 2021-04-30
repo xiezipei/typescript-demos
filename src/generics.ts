@@ -274,11 +274,85 @@
 
 
 // ========== 泛型 - 泛型工具类型 - ReturnType 示例
-type T0 = ReturnType<() => string>; // string
-type T1 = ReturnType<(s: string) => void>;  //void
-type T2 = ReturnType<<T>() => T>;   // {}；???
-type T3 = ReturnType<<T extends U, U extends number[]>() => T>; // number[]；障眼法？
-type T4 = ReturnType<any>;  // any
-type T5 = ReturnType<never>;    // any
-// type T6 = ReturnType<string>;   // Error: 类型“string”不满足约束“(...args: any) => any”。
-// type T7 = ReturnType<Function>; // Error: 类型“Function”不满足约束“(...args: any) => any”
+// type T0 = ReturnType<() => string>; // string
+// type T1 = ReturnType<(s: string) => void>;  //void
+// type T2 = ReturnType<<T>() => T>;   // {}；???
+// type T3 = ReturnType<<T extends U, U extends number[]>() => T>; // number[]；障眼法？
+// type T4 = ReturnType<any>;  // any
+// type T5 = ReturnType<never>;    // any
+// // type T6 = ReturnType<string>;   // Error: 类型“string”不满足约束“(...args: any) => any”。
+// // type T7 = ReturnType<Function>; // Error: 类型“Function”不满足约束“(...args: any) => any”
+
+
+// ========== 泛型 - 使用泛型创建对象 - 构造签名
+// class FirstClass {
+//     id: number | undefined;
+// }
+
+// class SecondClass {
+//     name: string | undefined;
+// }
+
+// class GenericCreator<T> {
+//     create(): T {
+//         // return new T(); // Error: “T”仅表示类型，但在此处却作为值使用。
+//     }
+// }
+
+// const creator1 = new GenericCreator<FirstClass>();
+// const firstClass: FirstClass = creator1.create();
+
+// const creator2 = new GenericCreator<SecondClass>();
+// const secondClass: SecondClass = creator2.create();
+
+
+// ========== 泛型 - 构造函数类型的应用 - 错误示例
+// interface Point {
+//     new (x: number, y: number): Point,
+//     x: number,
+//     y: number
+// }
+
+// class Point2D implements Point {    // Error: 类“Point2D”错误实现接口“Point”
+//     readonly x: number;
+//     readonly y: number;
+
+//     constructor(x: number, y: number) {
+//         this.x = x;
+//         this.y = y;
+//     }
+// }
+
+// const point: Point = new Point2D(1, 2);
+
+
+// ========== 泛型 - 构造函数类型的应用 - 正确示例
+interface Point {
+    x: number,
+    y: number
+}
+
+interface PointConstructor {
+    new (x: number, y: number): Point
+}
+
+class Point2D implements Point {
+    readonly x: number;
+    readonly y: number;
+
+    constructor(x: number, y: number) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+// 工厂函数
+function newPoint(
+    pointConstructor: PointConstructor,
+    x: number,
+    y: number
+): Point {
+    return new pointConstructor(x, y);
+}
+
+const point: Point = newPoint(Point2D, 1, 2);
