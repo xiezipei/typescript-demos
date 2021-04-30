@@ -327,32 +327,63 @@
 
 
 // ========== 泛型 - 构造函数类型的应用 - 正确示例
-interface Point {
-    x: number,
-    y: number
+// interface Point {
+//     x: number,
+//     y: number
+// }
+
+// interface PointConstructor {
+//     new (x: number, y: number): Point
+// }
+
+// class Point2D implements Point {
+//     readonly x: number;
+//     readonly y: number;
+
+//     constructor(x: number, y: number) {
+//         this.x = x;
+//         this.y = y;
+//     }
+// }
+
+// // 工厂函数
+// function newPoint(
+//     pointConstructor: PointConstructor,
+//     x: number,
+//     y: number
+// ): Point {
+//     return new pointConstructor(x, y);
+// }
+
+// const point: Point = newPoint(Point2D, 1, 2);
+
+
+// // ========== 泛型 - 使用泛型创建对象
+// class FirstClass {
+//     id: number | undefined;
+//   }
+  
+// class SecondClass {
+//     name: string | undefined;
+// }
+
+// class GenericCreator<T> {
+//     // 重构 `create` 方法
+//     create<T>(c: { new (): T }): T {
+//         return new c();
+//     }
+// }
+
+// const creator1 = new GenericCreator<FirstClass>();
+// const firstClass: FirstClass = creator1.create(FirstClass);
+
+// const creator2 = new GenericCreator<SecondClass>();
+// const secondClass: SecondClass = creator2.create(SecondClass);
+
+
+// // ========== 泛型 - 泛型是什么 - 示例 3
+function swap<T, U>(tuple: [T, U]): [U, T] {
+    return [tuple[1], tuple[0]];
 }
 
-interface PointConstructor {
-    new (x: number, y: number): Point
-}
-
-class Point2D implements Point {
-    readonly x: number;
-    readonly y: number;
-
-    constructor(x: number, y: number) {
-        this.x = x;
-        this.y = y;
-    }
-}
-
-// 工厂函数
-function newPoint(
-    pointConstructor: PointConstructor,
-    x: number,
-    y: number
-): Point {
-    return new pointConstructor(x, y);
-}
-
-const point: Point = newPoint(Point2D, 1, 2);
+swap([7, 'seven']); // => ['seven', 7]
