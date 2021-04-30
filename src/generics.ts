@@ -216,23 +216,69 @@
 
 
 // ========== 泛型 - 泛型工具类型 - Partial 示例
-interface Todo {
-    title: string,
-    description: string
-}
+// interface Todo {
+//     title: string,
+//     description: string
+// }
 
-function updateTodo(todo: Todo, fieldsToUpdate: Partial<Todo>) {
-    return { ...todo, ...fieldsToUpdate };   // ???
-}
+// function updateTodo(todo: Todo, fieldsToUpdate: Partial<Todo>) {
+//     return { ...todo, ...fieldsToUpdate };   // ???
+// }
 
-const todo1 = {
-    title: 'organize desk',
-    description: 'clear clutter'
-}
+// const todo1 = {
+//     title: 'organize desk',
+//     description: 'clear clutter'
+// }
 
-const todo2 = updateTodo(todo1, {
-    description: 'throw out trash'
-})
+// const todo2 = updateTodo(todo1, {
+//     description: 'throw out trash'
+// })
 
-console.log(todo1); // => {title: "organize desk", description: "clear clutter"}
-console.log(todo2); // => {title: "organize desk", description: "throw out trash"}
+// console.log(todo1); // => {title: "organize desk", description: "clear clutter"}
+// console.log(todo2); // => {title: "organize desk", description: "throw out trash"}
+
+
+// ========== 泛型 - 泛型工具类型 - Record 示例
+// interface PageInfo {
+//     title: string,
+// }
+
+// type Page = `home` | `about` | `concact`;
+
+// const x: Record<Page, PageInfo> = {
+//     about: { title: 'about' },
+//     concact: { title: 'concact' },
+//     home: { title: 'home' }
+// }
+
+
+// ========== 泛型 - 泛型工具类型 - Pick 示例
+// interface Todo {
+//     title: string,
+//     description: string,
+//     completed: boolean
+// }
+
+// type TodoPreview = Pick<Todo, 'title' | 'completed'>;
+
+// const todo: TodoPreview = {
+//     title: 'Clean room',
+//     completed: false
+// }
+
+
+// ========== 泛型 - 泛型工具类型 - Exclude 示例
+// type T0 = Exclude<'a' | 'b', 'a'>;  // 'b' | 'c'
+// type T1 = Exclude<'a' | 'b' | 'c', 'a' | 'b'>;  // 'c
+// type T2 = Exclude<string | number | (() => void), Function>;    // string | number
+
+
+// ========== 泛型 - 泛型工具类型 - ReturnType 示例
+type T0 = ReturnType<() => string>; // string
+type T1 = ReturnType<(s: string) => void>;  //void
+type T2 = ReturnType<<T>() => T>;   // {}；???
+type T3 = ReturnType<<T extends U, U extends number[]>() => T>; // number[]；障眼法？
+type T4 = ReturnType<any>;  // any
+type T5 = ReturnType<never>;    // any
+// type T6 = ReturnType<string>;   // Error: 类型“string”不满足约束“(...args: any) => any”。
+// type T7 = ReturnType<Function>; // Error: 类型“Function”不满足约束“(...args: any) => any”
